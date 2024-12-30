@@ -1,6 +1,9 @@
 package org.skypro.skyshop.basket;
 
+import org.skypro.skyshop.product.DiscountedProduct;
+import org.skypro.skyshop.product.FixPriceProduct;
 import org.skypro.skyshop.product.Product;
+import org.skypro.skyshop.product.SimpleProduct;
 
 import java.util.Arrays;
 
@@ -11,7 +14,33 @@ public class ProductBasket {
         boolean isAdded = false;
         for (int i = 0; i < basket.length; i++) {
             if (basket[i] == null) {
-                basket[i] = new Product(title, price);
+                basket[i] = new SimpleProduct(title, price);
+                isAdded = true;
+                break;
+            }
+        }
+        if (isAdded == false) System.out.println("Невозможно добавить продукт.");
+        else System.out.println("Товар [" +title +"] добавлен.");
+    }
+
+    public static void addAProductToBasket(String title, int price, int percent) {
+        boolean isAdded = false;
+        for (int i = 0; i < basket.length; i++) {
+            if (basket[i] == null) {
+                basket[i] = new DiscountedProduct(title, price, percent);
+                isAdded = true;
+                break;
+            }
+        }
+        if (isAdded == false) System.out.println("Невозможно добавить продукт.");
+        else System.out.println("Товар [" +title +"] добавлен.");
+    }
+
+    public static void addAProductToBasket(String title) {
+        boolean isAdded = false;
+        for (int i = 0; i < basket.length; i++) {
+            if (basket[i] == null) {
+                basket[i] = new FixPriceProduct(title);
                 isAdded = true;
                 break;
             }
@@ -27,10 +56,25 @@ public class ProductBasket {
     }
 
     public static void printTheContentsOfTheBasket() {
+        int numberOfSpecialProduct = 0;
         for (Product product:basket) {
-            if (product != null) System.out.println(product.getTitle() +": " +product.getPrice());
+            if (product != null) {
+                if (product.getClass() == FixPriceProduct.class) {
+                    numberOfSpecialProduct++;
+                    System.out.println(product);
+                } else if (product.getClass() == SimpleProduct.class) {
+                    System.out.println(product);
+                } else if (product.getClass() == DiscountedProduct.class) {
+                    numberOfSpecialProduct++;
+                    System.out.println(product);
+                }
+            }
         }
-        if (getTheTotalCostValue() != 0) System.out.println("Итого: " +getTheTotalCostValue());
+        System.out.println("---");
+        if (getTheTotalCostValue() != 0) {
+            System.out.println("Итого: " +getTheTotalCostValue());
+            System.out.println("Специальных товаров: " +numberOfSpecialProduct);
+        }
         else System.out.println("В корзине пусто.");
     }
 

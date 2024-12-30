@@ -24,10 +24,10 @@ public class App {
 Поиск товара по имени в пустой корзине.*/
         putASeparator();
         ProductBasket.addAProductToBasket("Карандаш", 25);
-        ProductBasket.addAProductToBasket("Степлер", 225);
-        ProductBasket.addAProductToBasket("Крышка", 20);
+        ProductBasket.addAProductToBasket("Степлер");
+        ProductBasket.addAProductToBasket("Крышка", 20, 30);
         ProductBasket.addAProductToBasket("Карандаш", 25);
-        ProductBasket.addAProductToBasket("Ручка", 105);
+        ProductBasket.addAProductToBasket("Ручка", 105, 10);
         ProductBasket.addAProductToBasket("Карандаш", 25);
 
         putASeparator();

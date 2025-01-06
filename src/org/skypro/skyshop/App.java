@@ -1,6 +1,15 @@
 package org.skypro.skyshop;
 
+import org.skypro.skyshop.article.Article;
 import org.skypro.skyshop.basket.ProductBasket;
+import org.skypro.skyshop.product.DiscountedProduct;
+import org.skypro.skyshop.product.FixPriceProduct;
+import org.skypro.skyshop.product.Product;
+import org.skypro.skyshop.product.SimpleProduct;
+import org.skypro.skyshop.search.SearchEngine;
+import org.skypro.skyshop.search.Searchable;
+
+import java.util.Arrays;
 
 public class App {
     static void println(Object text) {
@@ -52,5 +61,26 @@ public class App {
 
         putASeparator();
         println(ProductBasket.checkTheProductAvailabilityInTheBasket("крышка"));
+
+        putASeparator();
+        SearchEngine search = new SearchEngine(8);
+        Article pencilArticle = new Article("Карандаш","Простой карандаш");
+        Article penArticle = new Article("Ручка","Пластиковая ручка с синими чернилами");
+        Article staplerArticle = new Article("Степлер","Степлер в пластиковом корпусе");
+        search.add(new SimpleProduct("Карандаш",25));
+        search.add(new FixPriceProduct("Степлер"));
+        search.add(new DiscountedProduct("Крышка", 20, 30));
+        search.add(new SimpleProduct("Карандаш", 25));
+        search.add(new DiscountedProduct("Ручка", 105, 10));
+        search.add(pencilArticle);
+        search.add(penArticle);
+        search.add(staplerArticle);
+
+        for (Searchable searched:search.search("ручка")) {
+            if (searched!=null) {
+                searched.getStringRepresentation();
+            }
+        }
+        putASeparator();
     }
 }

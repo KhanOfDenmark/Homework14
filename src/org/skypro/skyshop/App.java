@@ -2,22 +2,21 @@ package org.skypro.skyshop;
 
 import org.skypro.skyshop.article.Article;
 import org.skypro.skyshop.basket.ProductBasket;
+import org.skypro.skyshop.exceptions.BestResultNotFound;
 import org.skypro.skyshop.product.DiscountedProduct;
 import org.skypro.skyshop.product.FixPriceProduct;
-import org.skypro.skyshop.product.Product;
 import org.skypro.skyshop.product.SimpleProduct;
 import org.skypro.skyshop.search.SearchEngine;
 import org.skypro.skyshop.search.Searchable;
 
-import java.util.Arrays;
-
 public class App {
+    public static int numberOfSeparator = 1;
     static void println(Object text) {
         System.out.println(text);
     }
 
     static void putASeparator() {
-        println("***");
+        println("*** " + numberOfSeparator++ + " ***");
     }
 
     public static void main(String[] args) {
@@ -78,9 +77,43 @@ public class App {
 
         for (Searchable searched:search.search("ручка")) {
             if (searched!=null) {
-                searched.getStringRepresentation();
+            searched.getStringRepresentation();
             }
         }
+
+        //Домашнее задание #17
+        putASeparator();
+        ProductBasket.emptyTheBasket();
+        try {
+            ProductBasket.addAProductToBasket("Карандаш", -56);
+        } catch (IllegalArgumentException e) {
+            println(e);
+        }
+        try {
+            ProductBasket.addAProductToBasket("   ");
+        } catch (IllegalArgumentException e) {
+            println(e);
+        }
+        try {
+            ProductBasket.addAProductToBasket("Крышка", 20, 123);
+        } catch (IllegalArgumentException e) {
+            println(e);
+        }
+
+        putASeparator();
+        try {
+            println(search.findBestResult("кар"));
+        } catch (BestResultNotFound e) {
+            println(e);
+        }
+
+        putASeparator();
+        try {
+            println(search.findBestResult("тон"));
+        } catch (BestResultNotFound e) {
+            println(e);
+        }
+
         putASeparator();
     }
 }

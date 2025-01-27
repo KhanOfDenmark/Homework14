@@ -5,10 +5,17 @@ public class DiscountedProduct extends Product{
     private int basePrice;
     private int discountInWholePercentages;
 
-    public DiscountedProduct(String title, int basePrice, int discountInWholePercentages) {
+    public DiscountedProduct(String title, int basePrice, int discountInWholePercentages)
+            throws IllegalArgumentException {
         super(title);
         this.basePrice = basePrice;
         this.discountInWholePercentages = discountInWholePercentages;
+        if (basePrice <= 0) {
+            throw new IllegalArgumentException("Невозможная цена!");
+        }
+        if (discountInWholePercentages > 100 || discountInWholePercentages < 0) {
+            throw new IllegalArgumentException("Невозможная скидка!");
+        }
     }
 
     @Override

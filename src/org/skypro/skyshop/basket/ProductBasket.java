@@ -4,6 +4,8 @@ import org.skypro.skyshop.product.DiscountedProduct;
 import org.skypro.skyshop.product.FixPriceProduct;
 import org.skypro.skyshop.product.Product;
 import org.skypro.skyshop.product.SimpleProduct;
+
+import java.util.Iterator;
 import java.util.LinkedList;
 
 public class ProductBasket {
@@ -58,9 +60,13 @@ public class ProductBasket {
 
     public static LinkedList<Product> removeProductsFromTheBasket(String title) {
         LinkedList<Product> removedProducts = new LinkedList<>();
-        for (int index = 0; index < basket.size(); index++) if (basket.get(index).getTitle().equalsIgnoreCase(title)) {
-            removedProducts.add(basket.get(index));
-            basket.remove(index);
+        Iterator<Product> iterator = basket.iterator();
+        while (iterator.hasNext()) {
+            Product product = iterator.next();
+            if (product.getTitle().equalsIgnoreCase(title)) {
+                removedProducts.add(product);
+                iterator.remove();
+            }
         }
         return removedProducts;
     }

@@ -49,6 +49,6 @@ public class DiscountedProduct extends Product{
 
     @Override
     public String toString() {
-        return (getTitle() +": " +getPrice() +" (" +getDiscountInWholePercentages() +"%)");
+        return (getTitle() +": " +getPrice() +" (" +getDiscountInWholePercentages() +"% скидка)");
     }
 }

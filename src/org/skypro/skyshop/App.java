@@ -9,8 +9,10 @@ import org.skypro.skyshop.product.SimpleProduct;
 import org.skypro.skyshop.search.SearchEngine;
 import org.skypro.skyshop.search.Searchable;
 
+import java.util.ArrayList;
+
 public class App {
-    public static int numberOfSeparator = 1;
+    private static int numberOfSeparator = 1;
 
     static void println(Object text) {
         System.out.println(text);
@@ -80,9 +82,11 @@ public class App {
         SearchEngine.add(penArticle);
         SearchEngine.add(staplerArticle);
 
-        for (Searchable searched : SearchEngine.search("ручка")) {
-            if (searched != null) {
-                searched.getStringRepresentation();
+        for (ArrayList<Searchable> searchedList : SearchEngine.search("ручка").values()) {
+            for (Searchable searched : searchedList) {
+                if (searched != null) {
+                    searched.getStringRepresentation();
+                }
             }
         }
 
@@ -142,5 +146,7 @@ public class App {
         } else {
             System.out.println("Список пуст");
         }
+
+        putASeparator();
     }
 }

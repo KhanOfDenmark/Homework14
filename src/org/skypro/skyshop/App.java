@@ -9,8 +9,10 @@ import org.skypro.skyshop.product.SimpleProduct;
 import org.skypro.skyshop.search.SearchEngine;
 import org.skypro.skyshop.search.Searchable;
 
+import java.util.ArrayList;
+
 public class App {
-    public static int numberOfSeparator = 1;
+    private static int numberOfSeparator = 1;
 
     static void println(Object text) {
         System.out.println(text);
@@ -32,12 +34,12 @@ public class App {
 Получение стоимости пустой корзины.
 Поиск товара по имени в пустой корзине.*/
         putASeparator();
-        ProductBasket.addAProductToBasket("Карандаш", 25);
-        ProductBasket.addAProductToBasket("Степлер");
-        ProductBasket.addAProductToBasket("Крышка", 20, 30);
-        ProductBasket.addAProductToBasket("Карандаш", 25);
-        ProductBasket.addAProductToBasket("Ручка", 105, 10);
-        ProductBasket.addAProductToBasket("Карандаш", 25);
+        ProductBasket.addProduct("Карандаш", 25);
+        ProductBasket.addProduct("Степлер");
+        ProductBasket.addProduct("Крышка", 20, 30);
+        ProductBasket.addProduct("Карандаш", 25);
+        ProductBasket.addProduct("Ручка", 105, 10);
+        ProductBasket.addProduct("Карандаш", 25);
 
 //        Печать содержимого корзины
         putASeparator();
@@ -80,9 +82,11 @@ public class App {
         SearchEngine.add(penArticle);
         SearchEngine.add(staplerArticle);
 
-        for (Searchable searched : SearchEngine.search("ручка")) {
-            if (searched != null) {
-                searched.getStringRepresentation();
+        for (ArrayList<Searchable> searchedList : SearchEngine.search("ручка").values()) {
+            for (Searchable searched : searchedList) {
+                if (searched != null) {
+                    searched.getStringRepresentation();
+                }
             }
         }
 
@@ -90,9 +94,9 @@ public class App {
         putASeparator();
         ProductBasket.emptyTheBasket();
         try {
-            ProductBasket.addAProductToBasket("Карандаш", -56);
-            ProductBasket.addAProductToBasket("   ");
-            ProductBasket.addAProductToBasket("Крышка", 20, 123);
+            ProductBasket.addProduct("Карандаш", -56);
+            ProductBasket.addProduct("   ");
+            ProductBasket.addProduct("Крышка", 20, 123);
         } catch (IllegalArgumentException e) {
             println(e);
         }
@@ -113,12 +117,13 @@ public class App {
 
 //        Домашнее задание #18
         putASeparator();
-        ProductBasket.addAProductToBasket("Карандаш", 25);
-        ProductBasket.addAProductToBasket("Степлер");
-        ProductBasket.addAProductToBasket("Крышка", 20, 30);
-        ProductBasket.addAProductToBasket("Карандаш", 25);
-        ProductBasket.addAProductToBasket("Ручка", 105, 10);
-        ProductBasket.addAProductToBasket("Карандаш", 25);
+        SimpleProduct pencil = new SimpleProduct("Карандаш", 25);
+        ProductBasket.addProduct("Карандаш", 25);
+        ProductBasket.addProduct("Степлер");
+        ProductBasket.addProduct("Крышка", 20, 30);
+        ProductBasket.addProduct(pencil);
+        ProductBasket.addProduct("Ручка", 105, 10);
+        ProductBasket.addProduct("Карандаш", 25);
 
         putASeparator();
         ProductBasket.printTheContentsOfTheBasket();
@@ -142,5 +147,7 @@ public class App {
         } else {
             System.out.println("Список пуст");
         }
+
+        putASeparator();
     }
 }

@@ -10,7 +10,7 @@ import java.util.*;
 public class ProductBasket {
     private static HashMap<String, LinkedList<Product>> basket = new HashMap<>();
 
-    public static void addAProductToBasket(String title, int price) {
+    public static void addProduct(String title, int price) {
         LinkedList<Product> products = new LinkedList<>();
         if (basket.containsKey(title)) {
             products = basket.get(title);
@@ -20,7 +20,7 @@ public class ProductBasket {
         System.out.println("Товар [" + title + "] добавлен.");
     }
 
-    public static void addAProductToBasket(String title, int price, int percent) {
+    public static void addProduct(String title, int price, int percent) {
         LinkedList<Product> products = new LinkedList<>();
         if (basket.containsKey(title)) {
             products = basket.get(title);
@@ -30,7 +30,7 @@ public class ProductBasket {
         System.out.println("Товар [" + title + "] добавлен.");
     }
 
-    public static void addAProductToBasket(String title) {
+    public static void addProduct(String title) {
         LinkedList<Product> products = new LinkedList<>();
         if (basket.containsKey(title)) {
             products = basket.get(title);
@@ -38,6 +38,16 @@ public class ProductBasket {
         products.add(new FixPriceProduct(title));
         basket.put(title, products);
         System.out.println("Товар [" + title + "] добавлен.");
+    }
+
+    public static void addProduct(Product product) {
+        LinkedList<Product> products = new LinkedList<>();
+        if (basket.containsKey(product.getObjectName())) {
+            products = basket.get(product.getObjectName());
+        }
+        products.add(product);
+        basket.put(product.getObjectName(), products);
+        System.out.println("Товар [" + product.getObjectName() + "] добавлен.");
     }
 
     public static int getTheTotalCostValue() {

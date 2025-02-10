@@ -9,8 +9,6 @@ import org.skypro.skyshop.product.SimpleProduct;
 import org.skypro.skyshop.search.SearchEngine;
 import org.skypro.skyshop.search.Searchable;
 
-import java.util.ArrayList;
-
 public class App {
     private static int numberOfSeparator = 1;
 
@@ -47,14 +45,16 @@ public class App {
 
 //        Получение общей стоимости товаров
         putASeparator();
-        println(ProductBasket.getTheTotalCostValue());
+        println("Цена продуктов в корзине: " +ProductBasket.getTheTotalCostValue());
 
 //        Наличие товара в корзине
         putASeparator();
-        println(ProductBasket.checkTheProductAvailabilityInTheBasket("крышка"));
+        println("Продукт \"крышка\" есть в корзине: "
+                +ProductBasket.checkTheProductAvailabilityInTheBasket("крышка"));
 
         putASeparator();
-        println(ProductBasket.checkTheProductAvailabilityInTheBasket("Ластик"));
+        println("Продукт \"Ластик\" есть в корзине: "
+                +ProductBasket.checkTheProductAvailabilityInTheBasket("Ластик"));
 
 //        Очистка корзины
         putASeparator();
@@ -63,10 +63,11 @@ public class App {
         ProductBasket.printTheContentsOfTheBasket();
 
         putASeparator();
-        println(ProductBasket.getTheTotalCostValue());
+        println("Цена продуктов в корзине: " +ProductBasket.getTheTotalCostValue());
 
         putASeparator();
-        println(ProductBasket.checkTheProductAvailabilityInTheBasket("крышка"));
+        println("Продукт \"крышка\" есть в корзине: "
+                +ProductBasket.checkTheProductAvailabilityInTheBasket("крышка"));
 
 
         putASeparator();
@@ -82,13 +83,12 @@ public class App {
         SearchEngine.add(penArticle);
         SearchEngine.add(staplerArticle);
 
-        for (ArrayList<Searchable> searchedList : SearchEngine.search("ручка").values()) {
-            for (Searchable searched : searchedList) {
-                if (searched != null) {
-                    searched.getStringRepresentation();
-                }
+        for (Searchable searched : SearchEngine.search("ручка")) {
+            if (searched != null) {
+                searched.getStringRepresentation();
             }
         }
+
 
 //        Домашнее задание #17
         putASeparator();

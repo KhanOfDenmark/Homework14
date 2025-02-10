@@ -1,38 +1,35 @@
 package org.skypro.skyshop.search;
 
+import org.skypro.skyshop.article.Article;
 import org.skypro.skyshop.exceptions.BestResultNotFound;
 
-import java.util.ArrayList;
-import java.util.TreeMap;
+import java.util.Comparator;
+import java.util.HashSet;
+import java.util.TreeSet;
 
 public class SearchEngine {
-    static ArrayList<Searchable> objectsMap = new ArrayList<>();
+    static HashSet<Searchable> objectsSet = new HashSet<>();
 
-    public static TreeMap<String, ArrayList<Searchable>> search(String term) {
-        TreeMap<String, ArrayList<Searchable>> discovered = new TreeMap<>();
+    public static TreeSet<Searchable> search(String term) {
+        TreeSet<Searchable> discovered = new TreeSet<>(new SearchableComparator());
 
-        for (Searchable searched : objectsMap) {
+        for (Searchable searched : objectsSet) {
             if (searched.getSearchTerm().toLowerCase().contains(term.toLowerCase())) {
-                ArrayList<Searchable> products = new ArrayList<>();
-                if (discovered.containsKey(searched.getObjectName())) {
-                    products = discovered.get(searched.getObjectName());
-                }
-                products.add(searched);
-                discovered.put(searched.getObjectName(), products);
+                discovered.add(searched);
             }
         }
         return discovered;
     }
 
     public static void add(Searchable object) {
-        objectsMap.add(object);
+        objectsSet.add(object);
     }
 
     public static Searchable findBestResult(String search)
     throws BestResultNotFound {
         Searchable object = null;
         int objectValue = 0;
-        for (Searchable searchable : objectsMap) {
+        for (Searchable searchable : objectsSet) {
             int value = 0;
             int index = 0;
             int substringIndex = searchable.getSearchTerm().indexOf(search, index);
@@ -52,4 +49,15 @@ public class SearchEngine {
         }
         return object;
     }
+
+    public static class SearchableComparator implements Comparator<Searchable> {
+        @Override
+        public int compare(Searchable s1, Searchable s2) {
+            if (s1.getObjectName().length() == s2.getObjectName().length()) {
+                return s1.getObjectName().compareTo(s2.getObjectName());
+            }
+            return Integer.compare(s1.getObjectName().length(), s2.getObjectName().length());
+        }
+    }
 }
+
